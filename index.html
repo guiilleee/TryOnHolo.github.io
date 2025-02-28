@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryOnHolo - Prueba Virtual de Ropa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px;
+        }
+        .container {
+            padding: 20px;
+            font-size: small;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .image-preview {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        .features, .why-choose {
+            padding: 20px;
+            background: #fff;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TryOnHolo</h1>
+        <p>Prueba virtualmente tu ropa antes de comprar</p>
+    </header>
+    <div class="features">
+        <h2>Características de TryOnHolo</h2>
+        <ul>
+            <li>Prueba de ropa en un modelo 3D basado en tu cuerpo real.</li>
+            <li>Interfaz fácil de usar y completamente intuitiva.</li>
+            <li>Reducción de devoluciones y compras equivocadas.</li>
+            <li>Compatible con diferentes marcas y estilos de ropa.</li>
+        </ul>
+    </div>
+
+    <div class="why-choose">
+        <h2>¿Por qué elegir TryOnHolo?</h2>
+        <ul>
+            <li>Ahorra tiempo probando ropa sin necesidad de ir a la tienda.</li>
+            <li>Mejor precisión en la selección de tallas.</li>
+            <li>Reduce el impacto ambiental al disminuir devoluciones.</li>
+            <li>Experimenta con diferentes estilos y colores antes de comprar.</li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>Sube algunas fotos de la figura de tu cuerpo e introduce tus medidas de forma detallada para la creación del holograma</h2>
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="image-preview" id="imagePreview"></div> 
+
+        <h2> Introduce tus medidas: </h2>
+        <table>
+            <tr><td>Altura:</td><td><input type="number" step="0.01" placeholder="1.70" required></td></tr>
+            <tr><td>Peso:</td><td><input type="number" step="0.01" placeholder="70" required></td></tr>
+            <tr><td>Contorno de cintura:</td><td><input type="number" step="0.01" placeholder="70" required></td></tr>
+            <tr><td>Contorno de cadera:</td><td><input type="number" step="0.01" placeholder="90" required></td></tr>
+            <tr><td>Contorno de pecho:</td><td><input type="number" step="0.01" placeholder="90" required></td></tr>
+            <tr><td>Contorno de brazo:</td><td><input type="number" step="0.01" placeholder="30" required></td></tr>
+            <tr><td>Contorno de pierna:</td><td><input type="number" step="0.01" placeholder="50" required></td></tr>
+        </table>
+
+        <button class="btn" onclick="tryOnClothes()">Probar Ropa</button>
+    </div>
+
+
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').innerHTML = '<img src="' + e.target.result + '" style="width:100%; border-radius:10px;">';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        function tryOnClothes() {
+            alert("Funcionalidad en desarrollo: aquí se mostrará tu holograma con la ropa seleccionada.");
+        }
+    </script>
+</body>
+</html>
