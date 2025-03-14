@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> <!-- Esta es la parte donde se definen los estilos de la página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryOnHolo - Prueba Virtual de Ropa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style1.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>TryOnHolo</h1>
+            <p>Prueba virtualmente tu ropa antes de comprar</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#" onclick="showSection('holograma')" id="nav-holograma" class="active">Crear Holograma</a>
+            <a href="#" onclick="showSection('prendas')" id="nav-prendas">Añadir Prendas</a>
+        </div>
+
+    </nav>
+    
+    <div class="container main-content">
+        <div id="holograma" class="section" style="display: block;">
+            <h2>Crea tu holograma personal</h2>
+            <p>Sube fotos de tu cuerpo e introduce tus medidas para crear un holograma virtual que te represente.</p>
+            
+            <div class="file-upload">
+                <h3>Sube tus fotos</h3>
+                <input type="file" id="fileInput" accept="image/*">
+                <p>Formatos aceptados: JPG, PNG (Máximo 5MB)</p>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+    
+            <h3>Introduce tus medidas:</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="altura">Altura (m):</label>
+                    <input type="number" id="altura" step="0.01" placeholder="1.70" required>
+                </div>
+                <div class="form-group">
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" id="peso" step="0.01" placeholder="70" required>
+                </div>
+                <div class="form-group">
+                    <label for="cintura">Contorno cintura (cm):</label>
+                    <input type="number" id="cintura" step="0.01" placeholder="70" required>
+                </div>
+                <div class="form-group">
+                    <label for="cadera">Contorno cadera (cm):</label>
+                    <input type="number" id="cadera" step="0.01" placeholder="90" required>
+                </div>
+            </div>
+    
+            <button class="btn" onclick="tryOnClothes()">Crear mi holograma</button>
+        </div>
+        
+        <div id="prendas" class="section" style="display: none;">
+            <h2>Añadir Prendas de Ropa</h2>
+            <p>Introduce el enlace o una descripción de la prenda de ropa que quieras probar virtualmente.</p>
+            
+            <div class="form-group">
+                <label for="prendaInput">URL o descripción de la prenda:</label>
+                <input type="text" id="prendaInput" placeholder="Ej: Camisa azul manga larga">
+            </div>
+            
+            <button class="btn" onclick="addClothingItem()">Añadir Prenda</button>
+            
+            <h3>Mis prendas seleccionadas:</h3>
+            <ul id="prendasLista"></ul>
+            
+            <button class="btn" id="tryOnButton" style="display: none;" onclick="goToTryOn()">Probar prendas seleccionadas</button>
+        </div>
+    </div>
+
+    <script src="scripts/scripts.js"></script>
+</body>
