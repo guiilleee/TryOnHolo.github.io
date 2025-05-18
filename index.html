@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> <!-- Esta es la parte donde se definen los estilos de la página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryOnHolo - Prueba Virtual de Ropa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style1.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>TryOnHolo</h1>
+            <p>Prueba virtualmente tu ropa antes de comprar</p> 
+            <div class="auth-buttons" id="authButtons">
+                <button class="btn-auth" onclick="showAuthForm('login')">Iniciar Sesión</button>
+                <button class="btn-auth" onclick="showAuthForm('register')">Registrarse</button>
+            </div>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span id="usernameDisplay"></span>
+                <button class="btn-auth" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#" onclick="showSection('holograma')" id="nav-holograma" class="active">Crear Holograma</a>
+            <a href="#" onclick="showSection('prendas')" id="nav-prendas">Añadir Prendas</a>
+            <a href="#" onclick="showSection('mi-holograma')" id="nav-mi-holograma">Mi Holograma</a>
+            <a href="#" onclick="showSection('tiendas')" id="nav-tiendas">Tiendas</a>
+            <a href="#" onclick="showSection('resenas')" id="nav-resenas">Reseñas</a>
+        </div>
+    </nav>
+    
+    <div class="container main-content">
+        <!-- Formularios de inicio de sesión y registro -->
+        <div id="auth-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeAuthForm()">&times;</span>
+                
+                <div id="login-form" class="auth-form" style="display: none;">
+                    <h2>Iniciar Sesión</h2>
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña:</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button class="btn" onclick="login()">Iniciar Sesión</button>
+                    <p class="form-switch">¿No tienes cuenta? <a href="#" onclick="showAuthForm('register')">Regístrate</a></p>
+                </div>
+                
+                <div id="register-form" class="auth-form" style="display: none;">
+                    <h2>Registrarse</h2>
+                    <div class="form-group">
+                        <label for="registerName">Nombre:</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email:</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña:</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar Contraseña:</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <button class="btn" onclick="register()">Registrarse</button>
+                    <p class="form-switch">¿Ya tienes cuenta? <a href="#" onclick="showAuthForm('login')">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="holograma" class="section" style="display: block;">
+            <h2>Crea tu holograma personal</h2>
+            <p>Sube fotos de tu cuerpo e introduce tus medidas para crear un holograma virtual que te represente.</p>
+            
+            <div class="file-upload">
+                <h3>Sube tus fotos</h3>
+                <input type="file" id="fileInput" accept="image/*">
+                <p>Formatos aceptados: JPG, PNG (Máximo 5MB)</p>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+    
+            <h3>Introduce tus medidas:</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="altura">Altura (m):</label>
+                    <input type="number" id="altura" step="0.01" placeholder="1.70" required>
+                </div>
+                <div class="form-group">
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" id="peso" step="0.01" placeholder="70" required>
+                </div>
+                <div class="form-group">
+                    <label for="cintura">Contorno cintura (cm):</label>
+                    <input type="number" id="cintura" step="0.01" placeholder="70" required>
+                </div>
+                <div class="form-group">
+                    <label for="cadera">Contorno cadera (cm):</label>
+                    <input type="number" id="cadera" step="0.01" placeholder="90" required>
+                </div>
+            </div>
+    
+            <button class="btn" onclick="tryOnClothes()">Crear mi holograma</button>
+        </div>
+        
+        <div id="prendas" class="section" style="display: none;">
+            <h2>Añadir Prendas de Ropa</h2>
+            <p>Introduce el enlace o una descripción de la prenda de ropa que quieras probar virtualmente.</p>
+            
+            <div class="form-group">
+                <label for="prendaInput">URL o descripción de la prenda:</label>
+                <input type="text" id="prendaInput" placeholder="Ej: Camisa azul manga larga">
+            </div>
+            
+            <button class="btn" onclick="addClothingItem()">Añadir Prenda</button>
+            
+            <h3>Mis prendas seleccionadas:</h3>
+            <ul id="prendasLista"></ul>
+            
+            <button class="btn" id="tryOnButton" style="display: none;" onclick="goToTryOn()">Probar prendas seleccionadas</button>
+        </div>
+
+        <div id="tiendas" class="section" style="display: none;">
+            <h2>Tiendas de Ropa</h2>
+            <p>Selecciona una tienda para explorar y elegir prendas para probar en tu holograma.</p>
+            
+            <div class="tiendas-grid">
+                <div class="tienda-card" onclick="visitStore('https://www.zara.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/zara-logo.png" alt="Zara Logo">
+                    </div>
+                    <h3>Zara</h3>
+                    <p>Moda actual a precios accesibles</p>
+                </div>
+                
+                <div class="tienda-card" onclick="visitStore('https://www.hm.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/hm-logo.png" alt="H&M Logo">
+                    </div>
+                    <h3>H&M</h3>
+                    <p>Ropa casual y moderna para todos</p>
+                </div>
+                
+                <div class="tienda-card" onclick="visitStore('https://www.pullandbear.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/pullandbear-logo.png" alt="Pull & Bear Logo">
+                    </div>
+                    <h3>Pull & Bear</h3>
+                    <p>Estilo juvenil y urbano</p>
+                </div>
+                
+                <div class="tienda-card" onclick="visitStore('https://www.mango.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/mango-logo.png" alt="Mango Logo">
+                    </div>
+                    <h3>Mango</h3>
+                    <p>Diseños elegantes y sofisticados</p>
+                </div>
+                
+                <div class="tienda-card" onclick="visitStore('https://www.bershka.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/bershka-logo.png" alt="Bershka Logo">
+                    </div>
+                    <h3>Bershka</h3>
+                    <p>Moda joven y tendencias actuales</p>
+                </div>
+                
+                <div class="tienda-card" onclick="visitStore('https://www.asos.com')">
+                    <div class="tienda-logo">
+                        <img src="images/logos/asos-logo.png" alt="ASOS Logo">
+                    </div>
+                    <h3>ASOS</h3>
+                    <p>Gran variedad de marcas y estilos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nueva sección para visualizar el holograma creado -->
+        <div id="mi-holograma" class="section" style="display: none;">
+            <h2>Mi Holograma Virtual</h2>
+            <p>Aquí puedes ver tu holograma personalizado y probar las prendas seleccionadas.</p>
+            
+            <div class="holograma-container">
+                <div class="holograma-view">
+                    <div class="holograma-figure" id="hologramaFigure">
+                        <!-- Aquí se mostrará el holograma -->
+                        <img src="/images/ChatGPT Image 16 may 2025, 10_23_58.png" alt="Silueta del holograma" id="hologramaImage">
+                        <div class="holograma-overlay" id="hologramaOverlay"></div>
+                    </div>
+                    
+                    <div class="holograma-info">
+                        <h3>Tus medidas</h3>
+                        <div class="medidas-display" id="medidasDisplay">
+                            <p>Para ver tus medidas, primero crea tu holograma en la sección "Crear Holograma".</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prendas-seleccionadas">
+                    <h3>Prendas seleccionadas</h3>
+                    <div id="prendasSeleccionadas" class="prendas-grid">
+                        <p>No has seleccionado ninguna prenda. Ve a la sección "Añadir Prendas" para seleccionar.</p>
+                    </div>
+                </div>
+                
+                <div class="try-on-controls">
+                    <button class="btn btn-primary" id="startTryOn" onclick="startVirtualTryOn()">Iniciar Prueba Virtual</button>
+                    <button class="btn btn-secondary" id="resetTryOn" onclick="resetPrendas()">Reiniciar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nueva sección de Reseñas -->
+        <div id="resenas" class="section" style="display: none;">
+            <h2>Reseñas de Usuarios</h2>
+            <p>Descubre lo que otros usuarios opinan sobre su experiencia con TryOnHolo o comparte tu propia reseña.</p>
+            
+            <div class="resenas-container">
+                <div class="resenas-stats">
+                    <div class="rating-average">
+                        <span id="ratingPromedio">4.5</span>
+                        <div class="stars-container">
+                            <div class="stars-filled" style="width: 90%"></div>
+                        </div>
+                        <span id="totalResenas">24 reseñas</span>
+                    </div>
+                    
+                    <div class="rating-bars">
+                        <div class="rating-bar-item">
+                            <span>5</span>
+                            <div class="bar-container">
+                                <div class="bar-filled" style="width: 70%"></div>
+                            </div>
+                            <span>70%</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>4</span>
+                            <div class="bar-container">
+                                <div class="bar-filled" style="width: 20%"></div>
+                            </div>
+                            <span>20%</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>3</span>
+                            <div class="bar-container">
+                                <div class="bar-filled" style="width: 5%"></div>
+                            </div>
+                            <span>5%</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>2</span>
+                            <div class="bar-container">
+                                <div class="bar-filled" style="width: 3%"></div>
+                            </div>
+                            <span>3%</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span>1</span>
+                            <div class="bar-container">
+                                <div class="bar-filled" style="width: 2%"></div>
+                            </div>
+                            <span>2%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nueva-resena">
+                    <h3>Escribe tu reseña</h3>
+                    <div class="resena-form">
+                        <div class="star-rating">
+                            <span>Tu valoración: </span>
+                            <div class="stars-input">
+                                <span class="star" data-value="1" onclick="setRating(1)">★</span>
+                                <span class="star" data-value="2" onclick="setRating(2)">★</span>
+                                <span class="star" data-value="3" onclick="setRating(3)">★</span>
+                                <span class="star" data-value="4" onclick="setRating(4)">★</span>
+                                <span class="star" data-value="5" onclick="setRating(5)">★</span>
+                            </div>
+                            <span id="ratingValue">0</span><span>/5</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="resenaTitle">Título:</label>
+                            <input type="text" id="resenaTitle" placeholder="Resumen de tu experiencia">
+                        </div>
+                        <div class="form-group">
+                            <label for="resenaText">Tu reseña:</label>
+                            <textarea id="resenaText" rows="4" placeholder="Cuéntanos tu experiencia con TryOnHolo..."></textarea>
+                        </div>
+                        <button class="btn" onclick="submitResena()">Publicar Reseña</button>
+                    </div>
+                </div>
+                
+                <div class="resenas-list">
+                    <h3>Últimas reseñas</h3>
+                    <div id="resenasContainer">
+                        <!-- Las reseñas se cargarán aquí mediante JavaScript -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="scripts/scripts.js"></script>
+</body>
+</html>
