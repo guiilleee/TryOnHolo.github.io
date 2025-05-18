@@ -746,12 +746,61 @@ nav a:hover, nav a.active {
     }
 }
 
-/* @media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tiendas-grid {
-        grid-template-columns: 1fr;
-    }
-} */
+/* Estilos para el botón de ayuda y el manual de usuario */
+.help-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 99;
+    transition: all 0.3s;
+}
+
+.help-button:hover {
+    transform: scale(1.1);
+    background-color: #4f46e5;
+}
+
+.help-icon {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.help-content {
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.help-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.help-section:last-child {
+    border-bottom: none;
+}
+
+.help-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.help-section ol {
+    padding-left: 20px;
+}
+
+.help-section li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}

@@ -445,7 +445,7 @@ function resetPrendas() {
     alert("Prendas reiniciadas. Puedes añadir nuevas prendas para probar.");
 }
 
-// Funciones para la sección de Reseñas
+
 
 // Establecer la valoración en estrellas
 function setRating(rating) {
@@ -709,3 +709,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Luego cargar todas las reseñas
     loadResenas();
 });
+
+// Funciones para el manual de ayuda
+function showHelp() {
+    document.getElementById('help-modal').style.display = 'block';
+}
+
+function closeHelp() {
+    document.getElementById('help-modal').style.display = 'none';
+}
